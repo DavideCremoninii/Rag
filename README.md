@@ -17,7 +17,7 @@ Dataset utilizzati: Sven e PrimeVul.
 
 ```bash
 git clone <repository-url>
-cd NewRag
+cd Rag
 ```
 
 ### 2. Creazione ambiente virtuale
@@ -59,15 +59,18 @@ Questo script esegue automaticamente le migrations SQL da `supabase/migrations/`
 
 **Popolamento dati:**
 
-```bash
-# Carica dataset Sven
-python load_sven.py
+Estrarre i file compressi .7z dei training set e test set dei 2 dataset contenuti in `dataset_embeddings_c2v/` prima di procedere al popolamento.
 
-# Carica dataset PrimeVul
+**Sven:**
+```bash
+python load_sven.py
+```
+**PrimeVul:**
+```bash
 python load_primevul.py
 ```
 
-Popola il database con i frammenti di codice dei due dataset + embeddings contenuti in `dataset_embeddings_c2v/`.
+Popola il database con i frammenti di codice dei due dataset + embeddings contenuti in `dataset_embeddings_c2v/` e per i vulnerabili anche informazioni relative alla CWE prese da `cwec_latest.xml`.
 
 
 ## Utilizzo
@@ -101,16 +104,17 @@ Genera due file:
 - `results.xlsx` - 3 colonne (File Name, Found CWE, Actual CWE)
 - `results_exp.xlsx` - 4 colonne (+ Explanation - per mantenere traccia delle motiaazioni delle risposte)
 
-Questi file vengono salvati nella cartella Models, nel percorso atteso dagli script per il calcolo dei risultati (metrics-scenario1/2/3.py e detect-hallucinations.py)
+Questi file vengono salvati nella cartella `Models`, nel percorso atteso dagli script per il calcolo dei risultati (metrics-scenario1/2/3.py e detect-hallucinations.py)
 
 
 ### Pulizia Database per nuova analisi con altro modello
 
+**Sven:**
 ```bash
-# Cancella risultati Sven
 python clear_sven_results.py
-
-# Cancella risultati PrimeVul
+```
+**PrimeVul:**
+```bash
 python clear_primevul_results.py
 ```
 
